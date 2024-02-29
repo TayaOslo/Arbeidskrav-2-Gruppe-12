@@ -124,7 +124,37 @@
             <i class="fas fa-heart"></i>
           </div>
         </div>
+
+        <div class="swipe-container">
+          <p>You have <span id="swipe-count">10</span> swipes left</p>
+        </div>
       </div>
     </div>
+
+    <script>
+      let swipeCount = 10;
+
+      function updateSwipeCount() {
+        const swipeCountElement = document.getElementById("swipe-count");
+        if (swipeCountElement) {
+          swipeCountElement.textContent = swipeCount;
+        }
+      }
+
+      function handleSwipe() {
+        if (swipeCount > 0) {
+          swipeCount--;
+          updateSwipeCount();
+        } else {
+          alert("You have run out of swipes!");
+        }
+      }
+
+      document.querySelector(".no").addEventListener("click", handleSwipe);
+
+      document.querySelector(".heart").addEventListener("click", handleSwipe);
+
+      updateSwipeCount();
+    </script>
   </body>
 </html>
