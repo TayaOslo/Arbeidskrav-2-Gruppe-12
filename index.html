@@ -132,6 +132,9 @@
     </div>
 
     <script>
+      const noBtn = document.querySelector(".no");
+      const heartBtn = document.querySelector(".heart");
+
       let swipeCount = 10;
 
       function updateSwipeCount() {
@@ -150,9 +153,9 @@
         }
       }
 
-      document.querySelector(".no").addEventListener("click", handleSwipe);
+      noBtn.addEventListener("click", handleSwipe);
 
-      document.querySelector(".heart").addEventListener("click", handleSwipe);
+      heartBtn.addEventListener("click", handleSwipe);
 
       updateSwipeCount();
     </script>
