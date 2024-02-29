@@ -200,3 +200,36 @@ body {
   width: 60px;
   height: 60px;
 }
+
+#woman-btn,
+#man-btn,
+#both-btn {
+  width: 150px;
+  height: 50px;
+  box-shadow: 0 1px 10px 0 rgba(0, 20, 20, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 70px;
+  margin: 4px;
+  transition: 0.2s transform;
+  font-size: large;
+}
+
+#woman-btn {
+  background-color: pink;
+}
+
+#man-btn {
+  background-color: rgb(106, 166, 245);
+}
+
+#both-btn {
+  background-color: rgb(218, 246, 177)
+}
+
+.genderbuttons {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
