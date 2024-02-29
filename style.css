@@ -201,16 +201,16 @@ body {
   height: 60px;
 }
 
-<<<<<<< HEAD
 .swipe-container {
   background-color: #eab4da;
   text-shadow: 1px 1px 5px #8b8aac;
   font-size: large;
-  padding: 10px; 
-  border-radius: 5px; 
-  margin-bottom: 20px; 
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
   margin-top: 20px;
-=======
+}
+
 #woman-btn,
 #man-btn,
 #both-btn {
@@ -235,12 +235,11 @@ body {
 }
 
 #both-btn {
-  background-color: rgb(218, 246, 177)
+  background-color: rgb(218, 246, 177);
 }
 
 .genderbuttons {
   margin-top: 10px;
   display: flex;
   align-items: center;
->>>>>>> newgenderbuttons
 }
