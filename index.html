@@ -98,7 +98,7 @@
         </div>
       </div>
       <div class="content">
-        <div class="card">
+        <!-- <div class="card">
           <div class="user">
             <img
               class="user"
@@ -113,7 +113,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="buttons">
           <div class="no">
             <i class="fas fa-times"></i>
@@ -136,34 +136,5 @@
         </div>
       </div>
     </div>
-
-    <script>
-      const noBtn = document.querySelector(".no");
-      const heartBtn = document.querySelector(".heart");
-
-      let swipeCount = 10;
-
-      function updateSwipeCount() {
-        const swipeCountElement = document.getElementById("swipe-count");
-        if (swipeCountElement) {
-          swipeCountElement.textContent = swipeCount;
-        }
-      }
-
-      function handleSwipe() {
-        if (swipeCount > 0) {
-          swipeCount--;
-          updateSwipeCount();
-        } else {
-          alert("You have run out of swipes!");
-        }
-      }
-
-      noBtn.addEventListener("click", handleSwipe);
-
-      heartBtn.addEventListener("click", handleSwipe);
-
-      updateSwipeCount();
-    </script>
   </body>
 </html>

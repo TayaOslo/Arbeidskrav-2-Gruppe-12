@@ -64,10 +64,6 @@ async function FetchRandomUser() {
 
       const [info] = data.results;
 
-      console.log(info);
-
-      console.log(info.picture.medium);
-
       const markup = `
        <div class="card">
        <div class="user"> 
