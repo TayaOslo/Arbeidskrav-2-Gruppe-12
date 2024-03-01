@@ -1,14 +1,14 @@
+// Hent DOM-elementer
 const noBtn = document.querySelector(".no");
 const heartBtn = document.querySelector(".heart");
-const contentCard = document.querySelector(".content");
-
-// const cardProfile = document.querySelector('.card');
-
+const contentContainer = document.querySelector(".content");
 const womanFilter = document.querySelector("#woman-btn");
 const manFilter = document.querySelector("#man-btn");
 
+// Initialiser variabler
 let swipeCount = 10;
 
+// Oppdaterer antall sveip tilgjengelig
 function updateSwipeCount() {
   const swipeCountElement = document.getElementById("swipe-count");
   if (swipeCountElement) {
@@ -16,110 +16,95 @@ function updateSwipeCount() {
   }
 }
 
+// Håndterer sveip
 function handleSwipe() {
   if (swipeCount > 0) {
     swipeCount--;
     updateSwipeCount();
   } else {
-    alert("You have run out of swipes!");
+    alert("Du har brukt opp alle sveipene dine!");
   }
 }
 
+// Legg til/ta bort filter for kvinnelige brukere ved klikk
 womanFilter.addEventListener("click", (e) => {
   console.log(e.target);
   e.target.classList.toggle("active");
-  womanFilter.style.backgroundColor = "";
 });
 
+// Legg til/ta bort filter for mannlige brukere ved klikk
 manFilter.addEventListener("click", (e) => {
   console.log(e.target);
   e.target.classList.toggle("active");
-  manFilter.style.backgroundColor = "";
 });
 
-noBtn.addEventListener("click", handleSwipe);
+// Legg til hendelseslyttere for knappene
+noBtn.addEventListener("click", handleButtonClick);
+heartBtn.addEventListener("click", handleButtonClick);
 
-heartBtn.addEventListener("click", handleSwipe);
-
+// Oppdaterer antall sveip tilgjengelig ved oppstart
 updateSwipeCount();
 
-////////////////////////////////////////////////////////////////////////
-
-const searchButton = document.getElementById("searchButton");
-
-async function FetchRandomUser() {
+// Hent en tilfeldig bruker fra API basert på valgt filter
+async function fetchRandomUser() {
   try {
     if (
       womanFilter.classList.contains("active") ||
       manFilter.classList.contains("active")
     ) {
-      // skal jobbe å filtrere
-      gender = "female";
-      womanFilter.style.backgroundColor = "green";
+      const gender = womanFilter.classList.contains("active")
+        ? "female"
+        : "male";
 
       let res = await fetch(`https://randomuser.me/api/?gender=${gender}`);
       const data = await res.json();
 
-      if (!data) throw new Error("Fant ikke random bruker!");
+      if (!data) throw new Error("Fant ikke tilfeldig bruker!");
 
       const [info] = data.results;
-
-      const markup = `
-       <div class="card">
-       <div class="user"> 
-       <img
-       class="user"
-       src="${info.picture.large}"
-       alt=""
-       />  
-       <div class="profile">
-       <div class="name">${info.name.first} <span> ${info.dob.age} </span></div>
-       <div class="local">
-       <i class="fas fa-map-marker-alt"></i>
-       <span>${info.location.city}, ${info.location.country}</span>
-       </div>  
-       </div>  
-       </div>  
-       </div>  
-       
-       `;
-
-      contentCard.insertAdjacentHTML("afterbegin", markup);
+      appendCard(info);
     }
   } catch (err) {
     alert(err);
   }
 }
 
-FetchRandomUser();
-//Muse klikk
-noBtn.addEventListener("click", function () {
-  console.log("nei har blitt trykket");
-  FetchRandomUser();
+// Legg til kortet for den hentede brukeren i HTML
+function appendCard(info) {
+  const markup = `
+    <div class="card">
+      <div class="user"> 
+        <img class="user" src="${info.picture.large}" alt="" />  
+        <div class="profile">
+          <div class="name">${info.name.first} <span> ${info.dob.age} </span></div>
+          <div class="local">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>${info.location.city}, ${info.location.country}</span>
+          </div>  
+        </div>  
+      </div>  
+    </div>`;
+  contentContainer.insertAdjacentHTML("afterbegin", markup);
+}
+
+// Håndterer knappetrykk (noBtn og heartBtn)
+function handleButtonClick() {
+  console.log("Knapp har blitt trykket");
+  handleSwipe();
+  fetchRandomUser();
   document.querySelector(".card").remove();
-});
-heartBtn.addEventListener("click", function () {
-  console.log("ja har blitt trykket");
-  FetchRandomUser();
-  document.querySelector(".card").remove();
-});
+}
 
-//Tastatur klikk
+// Legg til museklikk-hendelseslyttere for noBtn og heartBtn
+noBtn.addEventListener("click", handleButtonClick);
+heartBtn.addEventListener("click", handleButtonClick);
 
+// Legg til tastaturklikk-hendelseslytter for venstre- og høyrepil
 window.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowLeft") {
-    console.log("neste bruker,ikke interessert");
+  if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+    console.log("Neste bruker");
     handleSwipe();
-    FetchRandomUser();
-    document.querySelector(".card").remove();
-  }
-});
-
-window.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowRight") {
-    console.log("neste bruker,interessert");
-    handleSwipe();
-    FetchRandomUser();
+    fetchRandomUser();
     document.querySelector(".card").remove();
   }
 });
