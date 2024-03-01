@@ -201,6 +201,15 @@ body {
   height: 60px;
 }
 
+.swipe-container {
+  text-shadow: 1px 1px 5px #8b8aac;
+  font-size: large;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
 #female-btn,
 #male-btn,
 #both-btn {
