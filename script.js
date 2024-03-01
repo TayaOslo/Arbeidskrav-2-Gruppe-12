@@ -1,3 +1,52 @@
+const noBtn = document.querySelector(".no");
+const heartBtn = document.querySelector(".heart");
+const contentCard = document.querySelector(".content");
+
+// const cardProfile = document.querySelector('.card');
+
+const womanFilter = document.querySelector("#woman-btn");
+const manFilter = document.querySelector("#man-btn");
+
+let swipeCount = 10;
+
+function updateSwipeCount() {
+  const swipeCountElement = document.getElementById("swipe-count");
+  if (swipeCountElement) {
+    swipeCountElement.textContent = swipeCount;
+  }
+}
+
+function handleSwipe() {
+  if (swipeCount > 0) {
+    swipeCount--;
+    updateSwipeCount();
+  } else {
+    alert("You have run out of swipes!");
+  }
+}
+
+womanFilter.addEventListener("click", (e) => {
+  console.log(e.target);
+  e.target.classList.toggle("active");
+  womanFilter.style.backgroundColor = "";
+});
+
+manFilter.addEventListener("click", (e) => {
+  console.log(e.target);
+  e.target.classList.toggle("active");
+  manFilter.style.backgroundColor = "";
+});
+
+noBtn.addEventListener("click", handleSwipe);
+
+heartBtn.addEventListener("click", handleSwipe);
+
+updateSwipeCount();
+
+////////////////////////////////////////////////////////////////////////
+
+const searchButton = document.getElementById("searchButton");
+
 async function FetchRandomUser() {
   try {
     if (
@@ -63,7 +112,7 @@ heartBtn.addEventListener("click", function () {
 
 window.addEventListener("keydown", (e) => {
   if (e.key === "ArrowLeft") {
-    console.log("neste bruker, ikke intressert");
+    console.log("neste bruker,ikke interessert");
     handleSwipe();
     FetchRandomUser();
     document.querySelector(".card").remove();
@@ -72,7 +121,7 @@ window.addEventListener("keydown", (e) => {
 
 window.addEventListener("keydown", (e) => {
   if (e.key === "ArrowRight") {
-    console.log("neste bruker, intressert");
+    console.log("neste bruker,interessert");
     handleSwipe();
     FetchRandomUser();
     document.querySelector(".card").remove();
