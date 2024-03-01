@@ -4,7 +4,7 @@ async function FetchRandomUser() {
       womanFilter.classList.contains("active") ||
       manFilter.classList.contains("active")
     ) {
-      // skal jobbe å filtere
+      // skal jobbe å filtrere
       gender = "female";
       womanFilter.style.backgroundColor = "green";
 
@@ -47,3 +47,34 @@ async function FetchRandomUser() {
 }
 
 FetchRandomUser();
+//Muse klikk
+noBtn.addEventListener("click", function () {
+  console.log("nei har blitt trykket");
+  FetchRandomUser();
+  document.querySelector(".card").remove();
+});
+heartBtn.addEventListener("click", function () {
+  console.log("ja har blitt trykket");
+  FetchRandomUser();
+  document.querySelector(".card").remove();
+});
+
+//Tastatur klikk
+
+window.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowLeft") {
+    console.log("neste bruker, ikke intressert");
+    handleSwipe();
+    FetchRandomUser();
+    document.querySelector(".card").remove();
+  }
+});
+
+window.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowRight") {
+    console.log("neste bruker, intressert");
+    handleSwipe();
+    FetchRandomUser();
+    document.querySelector(".card").remove();
+  }
+});
