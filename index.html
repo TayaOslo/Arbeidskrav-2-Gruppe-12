@@ -164,6 +164,12 @@
         profileDiv.appendChild(nameDiv);
         profileDiv.appendChild(localDiv);
 
+        if (randomUser.gender === "male") {
+          userDiv.classList.add("male");
+        } else {
+          userDiv.classList.add("female");
+        }
+
         userDiv.appendChild(img);
         userDiv.appendChild(profileDiv);
 
@@ -228,7 +234,6 @@
       heartBtn.addEventListener("click", handleSwipe);
 
       updateSwipeCount();
-      
 
       const femaleBtn = document.getElementById("female-btn");
       const maleBtn = document.getElementById("male-btn");
