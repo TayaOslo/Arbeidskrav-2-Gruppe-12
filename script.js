@@ -63,6 +63,7 @@ const noBtn = document.querySelector(".no");
 const heartBtn = document.querySelector(".heart");
 
 let swipeCount = 10;
+let selectedGender = "";
 
 function updateSwipeCount() {
   const swipeCountElement = document.getElementById("swipe-count");
@@ -70,6 +71,8 @@ function updateSwipeCount() {
     swipeCountElement.textContent = swipeCount;
   }
 }
+// Opprett array for å lagre likte profiler
+let likedProfiles = [];
 
 // Håndterer sveip
 function handleSwipe() {
@@ -104,14 +107,17 @@ const bothBtn = document.getElementById("both-btn");
 
 femaleBtn.addEventListener("click", function () {
   fetchAndDisplayProfiles("female");
+  let selectedGender = "female";
 });
 
 maleBtn.addEventListener("click", function () {
   fetchAndDisplayProfiles("male");
+  let selectedGender = "male";
 });
 
 bothBtn.addEventListener("click", function () {
   fetchAndDisplayProfiles("");
+  let selectedGender = "both";
 });
 
 function fetchAndDisplayProfiles(gender) {
@@ -150,7 +156,19 @@ Del1: function handleButtonClick() {
 
 // Legg til museklikk-hendelseslyttere for noBtn og heartBtn
 noBtn.addEventListener("click", handleButtonClick);
-heartBtn.addEventListener("click", handleButtonClick);
+heartBtn.addEventListener("click", () => {
+  console.log("INTERESSERT:)");
+  handleButtonClick();
+
+  // Legg til den likte profilen i arrayet
+  likedProfiles.push(randomUser);
+
+  // Lagre likedProfiles i localStorage
+  localStorage.setItem("likedProfiles", JSON.stringify(likedProfiles));
+
+  // Oppdater oversikten over likte profiler på nettsiden
+  updateLikedProfiles();
+});
 
 // Legg til tastaturklikk-hendelseslytter for venstre- og høyrepil
 window.addEventListener("keydown", (e) => {
@@ -158,7 +176,8 @@ window.addEventListener("keydown", (e) => {
     console.log("Neste bruker,IKKE INTERESSERT!");
 
     // Hent og vis profiler etter at kortet er fjernet
-    fetchAndDisplayProfiles("both");
+    console.log(selectedGender);
+    fetchAndDisplayProfiles("selectedGender");
   }
   //handleSwipe();
 });
@@ -168,3 +187,40 @@ window.addEventListener("keydown", (e) => {
   }
   handleSwipe();
 });
+
+// Oppdaterer oversikten over likte profiler
+Del2: function updateLikedProfiles() {
+  const likedProfilesContainer = document.getElementById(
+    "liked-profiles-container"
+  );
+  likedProfilesContainer.innerHTML = "";
+
+  // Loop gjennom likedProfiles og legg til dem i oversikten
+  likedProfiles.forEach((profile) => {
+    const profileCard = createRandomUserCard(profile);
+    // Legg til slette- og redigeringsknapper
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Slett";
+    deleteBtn.addEventListener("click", () => {
+      // Fjern profilen fra likedProfiles og oppdater oversikten
+      likedProfiles = likedProfiles.filter(
+        (likedProfile) => likedProfile !== profile
+      );
+      updateLikedProfiles();
+    });
+
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "Rediger";
+    editBtn.addEventListener("click", () => {
+      // Implementer logikken for redigering av profil etter behov
+      console.log("Rediger profil");
+    });
+
+    // Legg til knappene i profilkortet
+    profileCard.appendChild(deleteBtn);
+    profileCard.appendChild(editBtn);
+
+    // Legg til profilkortet i oversikten
+    likedProfilesContainer.appendChild(profileCard);
+  });
+}
