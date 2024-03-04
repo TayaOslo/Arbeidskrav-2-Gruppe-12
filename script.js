@@ -57,10 +57,6 @@ function fetchRandomUser() {
       console.error("Error fetching random user:", error);
     });
 }
-fetchRandomUser();
-
-const noBtn = document.querySelector(".no");
-const heartBtn = document.querySelector(".heart");
 
 let swipeCount = 10;
 
@@ -71,7 +67,6 @@ function updateSwipeCount() {
   }
 }
 
-// Håndterer sveip
 function handleSwipe() {
   if (swipeCount > 0) {
     swipeCount--;
@@ -92,32 +87,31 @@ function handleSwipe() {
   }
 }
 
-noBtn.addEventListener("click", handleSwipe);
-
-heartBtn.addEventListener("click", handleSwipe);
-
 updateSwipeCount();
+
+fetchRandomUser();
 
 const femaleBtn = document.getElementById("female-btn");
 const maleBtn = document.getElementById("male-btn");
 const bothBtn = document.getElementById("both-btn");
 
-femaleBtn.addEventListener("click", function () {
-  fetchAndDisplayProfiles("female");
-});
+let currentGenderFilter = "";
 
-maleBtn.addEventListener("click", function () {
-  fetchAndDisplayProfiles("male");
-});
+function fetchAndDisplayProfiles() {
+  const apiUrl = `https://randomuser.me/api/`;
 
-bothBtn.addEventListener("click", function () {
-  fetchAndDisplayProfiles("");
-});
+  let genderFilter = "";
+  if (currentGenderFilter === "female") {
+    genderFilter = "female";
+  } else if (currentGenderFilter === "male") {
+    genderFilter = "male";
+  }
 
-function fetchAndDisplayProfiles(gender) {
-  const apiUrl = `https://randomuser.me/api/?gender=${gender}`;
+  const urlWithFilter = genderFilter
+    ? `${apiUrl}?gender=${genderFilter}`
+    : apiUrl;
 
-  fetch(apiUrl)
+  fetch(urlWithFilter)
     .then((response) => response.json())
     .then((data) => {
       const profile = data.results[0];
@@ -133,38 +127,50 @@ function fetchAndDisplayProfiles(gender) {
     });
 }
 
-// Håndterer knappetrykk (noBtn og heartBtn)
-Del1: function handleButtonClick() {
-  console.log("Knapp har blitt trykket");
-  handleSwipe();
-
-  // Sjekk om det er et kort før du fjerner det
-  const cardToRemove = document.querySelector(".card");
-  if (cardToRemove) {
-    cardToRemove.remove();
-
-    // Hent og vis profiler etter at kortet er fjernet
-    fetchAndDisplayProfiles("both");
-  }
+function swapProfile() {
+  fetchAndDisplayProfiles(); // Fetch and display a new profile
 }
 
-// Legg til museklikk-hendelseslyttere for noBtn og heartBtn
-noBtn.addEventListener("click", handleButtonClick);
-heartBtn.addEventListener("click", handleButtonClick);
-
-// Legg til tastaturklikk-hendelseslytter for venstre- og høyrepil
-window.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowLeft") {
-    console.log("Neste bruker,IKKE INTERESSERT!");
-
-    // Hent og vis profiler etter at kortet er fjernet
-    fetchAndDisplayProfiles("both");
-  }
-  //handleSwipe();
-});
-window.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowRight") {
-    console.log("INTERESSERT:)");
-  }
+function handleButtonClick(gender) {
+  currentGenderFilter = gender;
   handleSwipe();
+  fetchAndDisplayProfiles(); // Fetch and display profiles based on the selected gender
+}
+
+femaleBtn.addEventListener("click", function () {
+  currentGenderFilter = "female";
+  fetchAndDisplayProfiles();
+});
+
+maleBtn.addEventListener("click", function () {
+  currentGenderFilter = "male";
+  fetchAndDisplayProfiles();
+});
+
+bothBtn.addEventListener("click", function () {
+  currentGenderFilter = "";
+  fetchAndDisplayProfiles();
+});
+
+const noBtn = document.querySelector(".no");
+const heartBtn = document.querySelector(".heart");
+
+noBtn.addEventListener("click", function () {
+  handleSwipe(); // Handle swipe
+  fetchAndDisplayProfiles(); // Fetch and display a new random user
+});
+
+heartBtn.addEventListener("click", function () {
+  handleSwipe(); // Handle swipe
+  fetchAndDisplayProfiles(); // Fetch and display a new random user
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowLeft") {
+    handleSwipe(); // Decrease swipe count
+    swapProfile();
+  } else if (e.key === "ArrowRight") {
+    handleSwipe();
+    swapProfile();
+  }
 });
