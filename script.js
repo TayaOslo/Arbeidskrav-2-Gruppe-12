@@ -1,10 +1,19 @@
+const noBtn = document.querySelector(".no");
+const heartBtn = document.querySelector(".heart");
+const sideContainer = document.querySelector(".newProfile");
+
+// likte brukere
+let likedUsers = [];
+
 function createRandomUserCard(randomUser) {
   const userDiv = document.createElement("div");
   userDiv.classList.add("user");
 
   const img = document.createElement("img");
+  img.classList.add("userImg");
   img.classList.add("user");
   img.src = randomUser.picture.large;
+
   img.alt = `${randomUser.name.first} ${randomUser.name.last}`;
 
   const profileDiv = document.createElement("div");
@@ -14,6 +23,7 @@ function createRandomUserCard(randomUser) {
   nameDiv.classList.add("name");
   nameDiv.textContent = `${randomUser.name.first} ${randomUser.name.last} `;
   const ageSpan = document.createElement("span");
+  ageSpan.classList.add("age"); // la til age class
   ageSpan.textContent = randomUser.dob.age;
   nameDiv.appendChild(ageSpan);
 
@@ -57,13 +67,8 @@ function fetchRandomUser() {
       console.error("Error fetching random user:", error);
     });
 }
-fetchRandomUser();
-
-const noBtn = document.querySelector(".no");
-const heartBtn = document.querySelector(".heart");
 
 let swipeCount = 10;
-let selectedGender = "";
 
 function updateSwipeCount() {
   const swipeCountElement = document.getElementById("swipe-count");
@@ -71,10 +76,7 @@ function updateSwipeCount() {
     swipeCountElement.textContent = swipeCount;
   }
 }
-// Opprett array for å lagre likte profiler
-let likedProfiles = [];
 
-// Håndterer sveip
 function handleSwipe() {
   if (swipeCount > 0) {
     swipeCount--;
@@ -95,38 +97,35 @@ function handleSwipe() {
   }
 }
 
-noBtn.addEventListener("click", handleSwipe);
-
-heartBtn.addEventListener("click", handleSwipe);
-
 updateSwipeCount();
+
+fetchRandomUser();
 
 const femaleBtn = document.getElementById("female-btn");
 const maleBtn = document.getElementById("male-btn");
 const bothBtn = document.getElementById("both-btn");
 
-femaleBtn.addEventListener("click", function () {
-  fetchAndDisplayProfiles("female");
-  let selectedGender = "female";
-});
+let currentGenderFilter = "";
 
-maleBtn.addEventListener("click", function () {
-  fetchAndDisplayProfiles("male");
-  let selectedGender = "male";
-});
+function fetchAndDisplayProfiles() {
+  const apiUrl = `https://randomuser.me/api/`;
 
-bothBtn.addEventListener("click", function () {
-  fetchAndDisplayProfiles("");
-  let selectedGender = "both";
-});
+  let genderFilter = "";
+  if (currentGenderFilter === "female") {
+    genderFilter = "female";
+  } else if (currentGenderFilter === "male") {
+    genderFilter = "male";
+  }
 
-function fetchAndDisplayProfiles(gender) {
-  const apiUrl = `https://randomuser.me/api/?gender=${gender}`;
+  const urlWithFilter = genderFilter
+    ? `${apiUrl}?gender=${genderFilter}`
+    : apiUrl;
 
-  fetch(apiUrl)
+  fetch(urlWithFilter)
     .then((response) => response.json())
     .then((data) => {
       const profile = data.results[0];
+
       const randomUserCardDiv = document.getElementById("random-user-card");
 
       randomUserCardDiv.innerHTML = "";
@@ -134,93 +133,114 @@ function fetchAndDisplayProfiles(gender) {
       const randomUserCard = createRandomUserCard(profile);
       randomUserCardDiv.appendChild(randomUserCard);
     })
+
     .catch((error) => {
       console.error("Error fetching profile:", error);
     });
 }
 
-// Håndterer knappetrykk (noBtn og heartBtn)
-Del1: function handleButtonClick() {
-  console.log("Knapp har blitt trykket");
-  handleSwipe();
-
-  // Sjekk om det er et kort før du fjerner det
-  const cardToRemove = document.querySelector(".card");
-  if (cardToRemove) {
-    cardToRemove.remove();
-
-    // Hent og vis profiler etter at kortet er fjernet
-    fetchAndDisplayProfiles("both");
-  }
+function swapProfile() {
+  fetchAndDisplayProfiles(); // Fetch and display a new profile
 }
 
-// Legg til museklikk-hendelseslyttere for noBtn og heartBtn
-noBtn.addEventListener("click", handleButtonClick);
-heartBtn.addEventListener("click", () => {
-  console.log("INTERESSERT:)");
-  handleButtonClick();
-
-  // Legg til den likte profilen i arrayet
-  likedProfiles.push(randomUser);
-
-  // Lagre likedProfiles i localStorage
-  localStorage.setItem("likedProfiles", JSON.stringify(likedProfiles));
-
-  // Oppdater oversikten over likte profiler på nettsiden
-  updateLikedProfiles();
-});
-
-// Legg til tastaturklikk-hendelseslytter for venstre- og høyrepil
-window.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowLeft") {
-    console.log("Neste bruker,IKKE INTERESSERT!");
-
-    // Hent og vis profiler etter at kortet er fjernet
-    console.log(selectedGender);
-    fetchAndDisplayProfiles("selectedGender");
-  }
-  //handleSwipe();
-});
-window.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowRight") {
-    console.log("INTERESSERT:)");
-  }
+function handleButtonClick(gender) {
+  currentGenderFilter = gender;
   handleSwipe();
+  fetchAndDisplayProfiles(); // Fetch and display profiles based on the selected gender
+}
+
+femaleBtn.addEventListener("click", function () {
+  currentGenderFilter = "female";
+  fetchAndDisplayProfiles();
 });
 
-// Oppdaterer oversikten over likte profiler
-Del2: function updateLikedProfiles() {
-  const likedProfilesContainer = document.getElementById(
-    "liked-profiles-container"
-  );
-  likedProfilesContainer.innerHTML = "";
+maleBtn.addEventListener("click", function () {
+  currentGenderFilter = "male";
+  fetchAndDisplayProfiles();
+});
 
-  // Loop gjennom likedProfiles og legg til dem i oversikten
-  likedProfiles.forEach((profile) => {
-    const profileCard = createRandomUserCard(profile);
-    // Legg til slette- og redigeringsknapper
-    const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "Slett";
-    deleteBtn.addEventListener("click", () => {
-      // Fjern profilen fra likedProfiles og oppdater oversikten
-      likedProfiles = likedProfiles.filter(
-        (likedProfile) => likedProfile !== profile
-      );
-      updateLikedProfiles();
-    });
+bothBtn.addEventListener("click", function () {
+  currentGenderFilter = "";
+  fetchAndDisplayProfiles();
+});
 
-    const editBtn = document.createElement("button");
-    editBtn.textContent = "Rediger";
-    editBtn.addEventListener("click", () => {
-      // Implementer logikken for redigering av profil etter behov
-      console.log("Rediger profil");
-    });
+noBtn.addEventListener("click", function () {
+  handleSwipe(); // Handle swipe
+  fetchAndDisplayProfiles(); // Fetch and display a new random user
+});
 
-    // Legg til knappene i profilkortet
-    profileCard.appendChild(deleteBtn);
-    profileCard.appendChild(editBtn);
+heartBtn.addEventListener("click", function () {
+  handleSwipe(); // Handle swipe
+  fetchAndDisplayProfiles(); // Fetch and display a new random user
 
-    // Legg til profilkortet i oversikten
-    likedProfilesContainer.appendChild(profileCard);
-  });
+  // push liked user to "likedUsers" <----- DEL 2
+
+  // få bruker info
+
+  const likedNameAge = document.querySelector(".name").textContent;
+  const location = document.querySelector(".local").textContent;
+  const likedImg = document.querySelector(".userImg").src;
+
+  const userInfo = { likedNameAge, location, likedImg };
+
+  likedUsers.push(userInfo);
+
+  // sett inn profil
+  renderProfile();
+
+  // lagre users
+  localStorage.setItem("likedProfiles", JSON.stringify(likedUsers));
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowLeft") {
+    handleSwipe(); // Decrease swipe count
+    swapProfile();
+  } else if (e.key === "ArrowRight") {
+    swapProfile();
+    fetchAndDisplayProfiles();
+
+    const likedNameAge = document.querySelector(".name").textContent;
+    const location = document.querySelector(".local").textContent;
+    const likedImg = document.querySelector(".userImg").src;
+
+    const userInfo = { likedNameAge, location, likedImg };
+
+    likedUsers.push(userInfo);
+
+    // sett inn profil
+    renderProfile();
+
+    // lagre users
+    localStorage.setItem("likedProfiles", JSON.stringify(likedUsers));
+
+    renderProfile();
+  }
+});
+
+// legget til likte brukere på siden del 2.1
+
+function renderProfile() {
+  const markup = likedUsers
+    .map((user) => {
+      return `
+    <div class="messages">
+    <div class="avatar">
+      <img
+        src="${user.likedImg}"
+        alt=""
+      />
+    </div>
+    <div class="message">
+      <div class="user">${user.likedNameAge}</div>
+      <div class="text">
+        ${user.location}
+      </div>
+    </div>
+  </div>
+  `;
+    })
+    .join("");
+
+  sideContainer.innerHTML = markup;
 }
