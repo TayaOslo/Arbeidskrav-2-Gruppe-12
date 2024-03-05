@@ -222,7 +222,7 @@ document.addEventListener("keydown", (e) => {
 
 function renderProfile() {
   const markup = likedUsers
-    .map((user) => {
+    .map((user, index) => {
       return `
     <div class="messages">
     <div class="avatar">
