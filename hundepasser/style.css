@@ -1,1 +1,59 @@
-/* Here comes code for CSS */
+body {
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #fbf2ed; /* Lys brunaktig */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Økt skygge */
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Økt skygge */
+}
+
+h1 {
+  text-align: center;
+  color: #733b36; /* Mørk rød */
+  margin-bottom: 20px;
+  text-transform: uppercase; /* Gjør tittelen til store bokstaver */
+}
+
+.profiles {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(150px, 1fr));
+  gap: 30px; /* Økt avstand mellom kortene */
+}
+
+.profile-card {
+  background-color: #e8d4c6; /* Lys oransje */
+  border-radius: 20px; /* Mer avrundede hjørner */
+  padding: 15px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Økt skygge */
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-img {
+  width: 100%;
+  height: 150px; /* Samme størrelse for begge bilder */
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px; /* Avstand mellom bildene */
+}
+
+.profile-details {
+  margin-top: auto; /* Teksten plasseres nederst */
+}
+
+.profile-name {
+  font-weight: bold;
+  color: #733b36; /* Hvit */
+}
+
+.profile-location {
+  font-style: italic;
+  color: #733b36; /* Hvit */
+}
