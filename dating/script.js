@@ -236,6 +236,10 @@ function renderProfile() {
       <div class="text">
         ${user.location}
       </div>
+      <div>
+          <button onclick="deleteProfile(${user.index})">Slett</button>
+              <button onclick="editProfile(${user.index})">Rediger</button>
+          </div>
     </div>
   </div>
   `;
@@ -244,4 +248,20 @@ function renderProfile() {
 
   sideContainer.innerHTML = markup;
 }
-// Test//
+
+// Legg til følgende to funksjoner for sletting og redigering
+
+function deleteProfile(index) {
+  likedUsers.splice(index, 1);
+  renderProfile();
+  updateLocalStorage();
+}
+
+function editProfile(index) {
+  // Legg til logikk for redigering av profilen etter behov
+  alert("Redigeringsfunksjonalitet kommer snart!");
+}
+
+function updateLocalStorage() {
+  localStorage.setItem("likedProfiles", JSON.stringify(likedUsers));
+}
