@@ -2,8 +2,8 @@ body {
   font-family: "Arial", sans-serif;
   margin: 0;
   padding: 20px;
-  background-color: #fbf2ed; /* Lys brunaktig */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Økt skygge */
+  background-color: #fbf2ed;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 .container {
@@ -11,49 +11,49 @@ body {
   margin: 0 auto;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Økt skygge */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
   text-align: center;
-  color: #733b36; /* Mørk rød */
+  color: #733b36;
   margin-bottom: 20px;
-  text-transform: uppercase; /* Gjør tittelen til store bokstaver */
+  text-transform: uppercase;
 }
 
 .profiles {
   display: grid;
   grid-template-columns: repeat(5, minmax(150px, 1fr));
-  gap: 30px; /* Økt avstand mellom kortene */
+  gap: 30px;
 }
 
 .profile-card {
-  background-color: #e8d4c6; /* Lys oransje */
-  border-radius: 20px; /* Mer avrundede hjørner */
+  background-color: #e8d4c6;
+  border-radius: 20px;
   padding: 15px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Økt skygge */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
 }
 
 .profile-img {
   width: 100%;
-  height: 150px; /* Samme størrelse for begge bilder */
+  height: 150px;
   object-fit: cover;
   border-radius: 10px;
-  margin-bottom: 10px; /* Avstand mellom bildene */
+  margin-bottom: 10px;
 }
 
 .profile-details {
-  margin-top: auto; /* Teksten plasseres nederst */
+  margin-top: auto;
 }
 
 .profile-name {
   font-weight: bold;
-  color: #733b36; /* Hvit */
+  color: #733b36;
 }
 
 .profile-location {
   font-style: italic;
-  color: #733b36; /* Hvit */
+  color: #733b36;
 }
