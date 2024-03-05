@@ -258,8 +258,9 @@ function deleteProfile(index) {
   likedUsers.splice(index, 1);
   renderProfile();
   updateLocalStorage();
+  updateSwipeCount(); // Oppdaterer også antall sveip etter sletting
 }
-
+// Del3
 function editProfile(index) {
   // Legg til logikk for redigering av profilen etter behov
   alert("Redigeringsfunksjonalitet kommer snart!");
