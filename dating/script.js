@@ -237,8 +237,8 @@ function renderProfile() {
         ${user.location}
       </div>
       <div>
-          <button onclick="deleteProfile(${user.index})">Slett</button>
-              <button onclick="editProfile(${user.index})">Rediger</button>
+          <button onclick="deleteProfile(${index})">Slett</button>
+              <button onclick="editProfile(${index})">Rediger</button>
           </div>
     </div>
   </div>
