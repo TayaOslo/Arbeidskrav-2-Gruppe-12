@@ -1,10 +1,19 @@
+const noBtn = document.querySelector(".no");
+const heartBtn = document.querySelector(".heart");
+const sideContainer = document.querySelector(".newProfile");
+
+// likte brukere
+let likedUsers = [];
+
 function createRandomUserCard(randomUser) {
   const userDiv = document.createElement("div");
   userDiv.classList.add("user");
 
   const img = document.createElement("img");
+  img.classList.add("userImg");
   img.classList.add("user");
   img.src = randomUser.picture.large;
+
   img.alt = `${randomUser.name.first} ${randomUser.name.last}`;
 
   const profileDiv = document.createElement("div");
@@ -14,6 +23,7 @@ function createRandomUserCard(randomUser) {
   nameDiv.classList.add("name");
   nameDiv.textContent = `${randomUser.name.first} ${randomUser.name.last} `;
   const ageSpan = document.createElement("span");
+  ageSpan.classList.add("age"); // la til age class
   ageSpan.textContent = randomUser.dob.age;
   nameDiv.appendChild(ageSpan);
 
@@ -115,6 +125,7 @@ function fetchAndDisplayProfiles() {
     .then((response) => response.json())
     .then((data) => {
       const profile = data.results[0];
+
       const randomUserCardDiv = document.getElementById("random-user-card");
 
       randomUserCardDiv.innerHTML = "";
@@ -122,6 +133,7 @@ function fetchAndDisplayProfiles() {
       const randomUserCard = createRandomUserCard(profile);
       randomUserCardDiv.appendChild(randomUserCard);
     })
+
     .catch((error) => {
       console.error("Error fetching profile:", error);
     });
@@ -152,9 +164,6 @@ bothBtn.addEventListener("click", function () {
   fetchAndDisplayProfiles();
 });
 
-const noBtn = document.querySelector(".no");
-const heartBtn = document.querySelector(".heart");
-
 noBtn.addEventListener("click", function () {
   handleSwipe(); // Handle swipe
   fetchAndDisplayProfiles(); // Fetch and display a new random user
@@ -163,6 +172,24 @@ noBtn.addEventListener("click", function () {
 heartBtn.addEventListener("click", function () {
   handleSwipe(); // Handle swipe
   fetchAndDisplayProfiles(); // Fetch and display a new random user
+
+  // push liked user to "likedUsers" <----- DEL 2
+
+  // få bruker info
+
+  const likedNameAge = document.querySelector(".name").textContent;
+  const location = document.querySelector(".local").textContent;
+  const likedImg = document.querySelector(".userImg").src;
+
+  const userInfo = { likedNameAge, location, likedImg };
+
+  likedUsers.push(userInfo);
+
+  // sett inn profil
+  renderProfile();
+
+  // lagre users
+  localStorage.setItem("likedProfiles", JSON.stringify(likedUsers));
 });
 
 document.addEventListener("keydown", (e) => {
@@ -170,7 +197,50 @@ document.addEventListener("keydown", (e) => {
     handleSwipe(); // Decrease swipe count
     swapProfile();
   } else if (e.key === "ArrowRight") {
-    handleSwipe();
     swapProfile();
+    fetchAndDisplayProfiles();
+
+    const likedNameAge = document.querySelector(".name").textContent;
+    const location = document.querySelector(".local").textContent;
+    const likedImg = document.querySelector(".userImg").src;
+
+    const userInfo = { likedNameAge, location, likedImg };
+
+    likedUsers.push(userInfo);
+
+    // sett inn profil
+    renderProfile();
+
+    // lagre users
+    localStorage.setItem("likedProfiles", JSON.stringify(likedUsers));
+
+    renderProfile();
   }
 });
+
+// legget til likte brukere på siden del 2.1
+
+function renderProfile() {
+  const markup = likedUsers
+    .map((user) => {
+      return `
+    <div class="messages">
+    <div class="avatar">
+      <img
+        src="${user.likedImg}"
+        alt=""
+      />
+    </div>
+    <div class="message">
+      <div class="user">${user.likedNameAge}</div>
+      <div class="text">
+        ${user.location}
+      </div>
+    </div>
+  </div>
+  `;
+    })
+    .join("");
+
+  sideContainer.innerHTML = markup;
+}
