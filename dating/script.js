@@ -262,8 +262,15 @@ function deleteProfile(index) {
 }
 // Del3
 function editProfile(index) {
-  // Legg til logikk for redigering av profilen etter behov
-  alert("Redigeringsfunksjonalitet kommer snart!");
+  const newName = prompt("Enter the new name:");
+  const newAge = prompt("Enter the new age:");
+  const newLocation = prompt("Enter the new location:");
+
+  likedUsers[index].likedNameAge = newName + " " + newAge;
+  likedUsers[index].location = newLocation;
+
+  renderProfile();
+  updateLocalStorage();
 }
 
 function updateLocalStorage() {
