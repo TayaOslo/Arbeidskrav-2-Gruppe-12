@@ -5,6 +5,26 @@ document.addEventListener("DOMContentLoaded", function () {
   loadNewCardsButton.classList.add("load-new-btn");
   document.body.appendChild(loadNewCardsButton);
 
+  const filterSelect = document.createElement("select");
+  filterSelect.classList.add("filter-select");
+  const dogBreeds = [
+    "Labrador",
+    "German Shepherd",
+    "Golden Retriever",
+    "Poodle",
+    "Bulldog",
+  ];
+
+  // hunderaser som valg i filteret
+  dogBreeds.forEach((breed) => {
+    const option = document.createElement("option");
+    option.value = breed.toLowerCase();
+    option.textContent = breed;
+    filterSelect.appendChild(option);
+  });
+
+  document.body.appendChild(filterSelect);
+
   async function fetchRandomUser() {
     const response = await fetch("https://randomuser.me/api/");
     const data = await response.json();
