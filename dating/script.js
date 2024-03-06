@@ -221,9 +221,12 @@ document.addEventListener("keydown", (e) => {
 // legget til likte brukere på siden del 2.1
 
 function renderProfile() {
-  const markup = likedUsers
-    .map((user) => {
-      return `
+  if (likedUsers.length > 10) {
+    alert("Slett minst en profil! fra listen");
+  } else {
+    const markup = likedUsers
+      .map((user, index) => {
+        return `
     <div class="messages">
     <div class="avatar">
       <img
@@ -236,11 +239,33 @@ function renderProfile() {
       <div class="text">
         ${user.location}
       </div>
+      <div>
+          <button onclick="deleteProfile(${index})">Slett</button>
+              <button onclick="editProfile(${index})">Rediger</button>
+          </div>
     </div>
   </div>
   `;
-    })
-    .join("");
+      })
+      .join("");
 
-  sideContainer.innerHTML = markup;
+    sideContainer.innerHTML = markup;
+  }
+}
+// Legg til følgende to funksjoner for sletting og redigering
+
+function deleteProfile(index) {
+  likedUsers.splice(index, 1);
+  renderProfile();
+  updateLocalStorage();
+  updateSwipeCount(); // Oppdaterer også antall sveip etter sletting
+}
+// Del3
+function editProfile(index) {
+  // Legg til logikk for redigering av profilen etter behov
+  alert("Redigeringsfunksjonalitet kommer snart!");
+}
+
+function updateLocalStorage() {
+  localStorage.setItem("likedProfiles", JSON.stringify(likedUsers));
 }
