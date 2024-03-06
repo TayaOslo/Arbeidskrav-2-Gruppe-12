@@ -101,9 +101,9 @@ updateSwipeCount();
 
 fetchRandomUser();
 
-const femaleBtn = document.getElementById("female-btn");
-const maleBtn = document.getElementById("male-btn");
-const bothBtn = document.getElementById("both-btn");
+const femaleBtn = document.querySelector("#female-btn");
+const maleBtn = document.querySelector("#male-btn");
+const bothBtn = document.querySelector("#both-btn");
 
 let currentGenderFilter = "";
 
@@ -126,7 +126,7 @@ function fetchAndDisplayProfiles() {
     .then((data) => {
       const profile = data.results[0];
 
-      const randomUserCardDiv = document.getElementById("random-user-card");
+      const randomUserCardDiv = document.querySelector("#random-user-card");
 
       randomUserCardDiv.innerHTML = "";
 
@@ -276,3 +276,4 @@ function editProfile(index) {
 function updateLocalStorage() {
   localStorage.setItem("likedProfiles", JSON.stringify(likedUsers));
 }
+
