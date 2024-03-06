@@ -1,6 +1,9 @@
 const noBtn = document.querySelector(".no");
 const heartBtn = document.querySelector(".heart");
 const matchesContainer = document.querySelector(".profiles");
+const messageContainer = document.querySelector(".messageContainer");
+const liMatches = document.querySelector("#liMatch");
+const liMessages = document.querySelector(".active");
 
 // likte brukere
 let likedUsers = [];
@@ -250,6 +253,9 @@ function renderProfile() {
       .join("");
 
     matchesContainer.innerHTML = matchesProfile;
+    messageContainer.style.display = "none";
+    liMatches.classList.add("active");
+    liMessages.classList.remove("active");
   }
 }
 
