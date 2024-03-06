@@ -161,7 +161,7 @@ body {
 }
 
 .content .buttons .no i {
-  color: #fd2e79;
+  color: hsl(338, 98%, 59%);
   font-size: 33px;
 }
 
@@ -223,6 +223,7 @@ body {
   margin: 4px;
   transition: 0.2s transform;
   font-size: large;
+  cursor: pointer;
 }
 
 #female-btn {
@@ -249,4 +250,17 @@ body {
 
 .user.female {
   border: 10px solid pink;
+}
+
+button {
+  background-color: #fd5068;
+  color: white;
+  padding: 10px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 95px;
+  margin-bottom: 10px;
+}
+button:hover {
+  background-color: #4ebf91;
 }
