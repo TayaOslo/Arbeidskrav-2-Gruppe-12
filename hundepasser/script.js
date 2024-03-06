@@ -93,5 +93,3 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
-
-//TEST!!
