@@ -1,6 +1,6 @@
 const noBtn = document.querySelector(".no");
 const heartBtn = document.querySelector(".heart");
-const sideContainer = document.querySelector(".newProfile");
+const matchesContainer = document.querySelector(".profiles");
 
 // likte brukere
 let likedUsers = [];
@@ -224,10 +224,10 @@ function renderProfile() {
   if (likedUsers.length > 10) {
     alert("Slett minst en profil! fra listen");
   } else {
-    const markup = likedUsers
+    const matchesProfile = likedUsers
       .map((user, index) => {
         return `
-    <div class="messages">
+    <div class="matches">
     <div class="avatar">
       <img
         src="${user.likedImg}"
@@ -249,9 +249,10 @@ function renderProfile() {
       })
       .join("");
 
-    sideContainer.innerHTML = markup;
+    matchesContainer.innerHTML = matchesProfile;
   }
 }
+
 // Legg til følgende to funksjoner for sletting og redigering
 
 function deleteProfile(index) {
