@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
     profileCard.classList.add("profile-card");
 
     const deleteButton = document.createElement("button");
-    deleteButton.textContent = "Slett";
+    deleteButton.textContent = "X";
     deleteButton.classList.add("delete-btn");
     deleteButton.addEventListener("click", function () {
       profileCard.remove();
