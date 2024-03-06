@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   const profilesContainer = document.querySelector(".profiles");
   const loadNewCardsButton = document.createElement("button");
-  loadNewCardsButton.textContent = "Vis 10 nye kort";
+  loadNewCardsButton.textContent = "10 new profiles";
   loadNewCardsButton.classList.add("load-new-btn");
   document.body.appendChild(loadNewCardsButton);
 
