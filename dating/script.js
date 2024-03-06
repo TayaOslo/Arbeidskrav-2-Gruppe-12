@@ -101,9 +101,9 @@ updateSwipeCount();
 
 fetchRandomUser();
 
-const femaleBtn = document.getElementById("female-btn");
-const maleBtn = document.getElementById("male-btn");
-const bothBtn = document.getElementById("both-btn");
+const femaleBtn = document.querySelector("#female-btn");
+const maleBtn = document.querySelector("#male-btn");
+const bothBtn = document.querySelector("#both-btn");
 
 let currentGenderFilter = "";
 
@@ -126,7 +126,7 @@ function fetchAndDisplayProfiles() {
     .then((data) => {
       const profile = data.results[0];
 
-      const randomUserCardDiv = document.getElementById("random-user-card");
+      const randomUserCardDiv = document.querySelector("#random-user-card");
 
       randomUserCardDiv.innerHTML = "";
 
@@ -263,10 +263,18 @@ function deleteProfile(index) {
 }
 // Del3
 function editProfile(index) {
-  // Legg til logikk for redigering av profilen etter behov
-  alert("Redigeringsfunksjonalitet kommer snart!");
+  const newName = prompt("Enter the new name:");
+  const newAge = prompt("Enter the new age:");
+  const newLocation = prompt("Enter the new location:");
+
+  likedUsers[index].likedNameAge = newName + " " + newAge;
+  likedUsers[index].location = newLocation;
+
+  renderProfile();
+  updateLocalStorage();
 }
 
 function updateLocalStorage() {
   localStorage.setItem("likedProfiles", JSON.stringify(likedUsers));
 }
+
