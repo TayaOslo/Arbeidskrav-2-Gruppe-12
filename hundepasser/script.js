@@ -1,5 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
   const profilesContainer = document.querySelector(".profiles");
+  const loadNewCardsButton = document.createElement("button");
+  loadNewCardsButton.textContent = "Vis 10 nye kort";
+  loadNewCardsButton.classList.add("load-new-btn");
+  document.body.appendChild(loadNewCardsButton);
 
   async function fetchRandomUser() {
     const response = await fetch("https://randomuser.me/api/");
@@ -13,39 +17,59 @@ document.addEventListener("DOMContentLoaded", function () {
     return data.message;
   }
 
-  async function createProfileCard() {
-    const user = await fetchRandomUser();
-    const dogImage = await fetchRandomDogImage();
-
+  function createProfileCard() {
     const profileCard = document.createElement("div");
     profileCard.classList.add("profile-card");
 
-    const userImg = document.createElement("img");
-    userImg.classList.add("profile-img");
-    userImg.src = user.picture.large;
-    userImg.alt = "User Image";
-    profileCard.appendChild(userImg);
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Slett";
+    deleteButton.classList.add("delete-btn");
+    deleteButton.addEventListener("click", function () {
+      profileCard.remove();
+      createProfileCard();
+    });
 
-    const dogImg = document.createElement("img");
-    dogImg.classList.add("profile-img");
-    dogImg.src = dogImage;
-    dogImg.alt = "Dog Image";
-    profileCard.appendChild(dogImg);
+    profileCard.appendChild(deleteButton);
 
-    const name = document.createElement("div");
-    name.classList.add("profile-name");
-    name.textContent = `${user.name.first} ${user.name.last}`;
-    profileCard.appendChild(name);
+    fetchRandomUser().then((user) => {
+      const userImg = document.createElement("img");
+      userImg.classList.add("profile-img");
+      userImg.src = user.picture.large;
+      userImg.alt = "User Image";
+      profileCard.appendChild(userImg);
 
-    const location = document.createElement("div");
-    location.classList.add("profile-location");
-    location.textContent = `${user.location.city}, ${user.location.country}`;
-    profileCard.appendChild(location);
+      fetchRandomDogImage().then((dogImage) => {
+        const dogImg = document.createElement("img");
+        dogImg.classList.add("profile-img");
+        dogImg.src = dogImage;
+        dogImg.alt = "Dog Image";
+        profileCard.appendChild(dogImg);
 
-    profilesContainer.appendChild(profileCard);
+        const name = document.createElement("div");
+        name.classList.add("profile-name");
+        name.textContent = `${user.name.first} ${user.name.last}`;
+        profileCard.appendChild(name);
+
+        const location = document.createElement("div");
+        location.classList.add("profile-location");
+        location.textContent = `${user.location.city}, ${user.location.country}`;
+        profileCard.appendChild(location);
+
+        profilesContainer.appendChild(profileCard);
+      });
+    });
   }
 
+  // Create initial 10 profile cards
   for (let i = 0; i < 10; i++) {
     createProfileCard();
   }
+
+  // Function to load 10 new profile cards
+  loadNewCardsButton.addEventListener("click", function () {
+    profilesContainer.innerHTML = ""; // Clear existing cards
+    for (let i = 0; i < 10; i++) {
+      createProfileCard();
+    }
+  });
 });
