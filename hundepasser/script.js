@@ -107,3 +107,6 @@ async function loadProfileCards(filterBreed) {
     }
   }
 }
+
+// Opprett initielle 10 kort
+loadProfileCards();
