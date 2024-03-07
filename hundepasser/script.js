@@ -51,6 +51,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     profileCard.appendChild(deleteButton);
 
+    //Chattte-knapp: DEL 5
+
+    const chatButton = document.createElement("button");
+    chatButton.textContent = "Chat";
+    chatButton.classList.add("chat-btn");
+    chatButton.addEventListener("click", function () {
+      console.log("Chat button clicked");
+    });
+    profileCard.appendChild(chatButton);
+
     fetchRandomUser().then((user) => {
       const userImg = document.createElement("img");
       userImg.classList.add("profile-img");
