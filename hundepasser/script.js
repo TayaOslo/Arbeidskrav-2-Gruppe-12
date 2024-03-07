@@ -107,6 +107,13 @@ document.addEventListener("DOMContentLoaded", function () {
   function openChatBox() {
     const chatBox = document.querySelector(".chat-box");
     chatBox.style.display = "block";
+
+    // Opprett en hilsen fra eieren av hunden
+    const ownerGreeting = document.createElement("p");
+    ownerGreeting.textContent =
+      "Hello! I'm the owner of this lovely dog. Feel free to send me a message!";
+    ownerGreeting.classList.add("owner-greeting");
+    chatBox.appendChild(ownerGreeting);
   }
 });
 async function loadProfileCards(filterBreed) {
