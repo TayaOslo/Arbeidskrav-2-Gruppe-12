@@ -46,7 +46,6 @@ document.addEventListener("DOMContentLoaded", function () {
     deleteButton.classList.add("delete-btn");
     deleteButton.addEventListener("click", function () {
       profileCard.remove();
-      createProfileCard();
     });
 
     profileCard.appendChild(deleteButton);
@@ -85,40 +84,29 @@ document.addEventListener("DOMContentLoaded", function () {
     createProfileCard();
   }
 
-  // Function to load 10 new profile cards
-  loadNewCardsButton.addEventListener("click", function () {
-    profilesContainer.innerHTML = ""; // Clear existing cards
+  async function loadProfileCards(filterBreed) {
+    profilesContainer.innerHTML = ""; // Tøm eksisterende kort
+
+    // Last inn 10 nye kort basert på filteret
     for (let i = 0; i < 10; i++) {
-      createProfileCard();
-    }
-  });
-});
+      const user = await fetchRandomUser();
+      const dogImage = await fetchRandomDogImage();
 
-async function loadProfileCards(filterBreed) {
-  profilesContainer.innerHTML = ""; // Tøm eksisterende kort
-
-  // Last inn 10 nye kort basert på filteret
-  for (let i = 0; i < 10; i++) {
-    const user = await fetchRandomUser();
-    const dogImage = await fetchRandomDogImage();
-
-    // Opprett kortet hvis det ikke er et filter eller hunderase matcher
-    if (!filterBreed || user.name.first.toLowerCase().includes(filterBreed)) {
-      createProfileCard(user, dogImage);
+      // Opprett kortet hvis det ikke er et filter eller hunderase matcher
+      if (!filterBreed || dogImage.includes(filterBreed)) {
+        createProfileCard(user, dogImage);
+      }
     }
   }
-}
 
-// Opprett initielle 10 kort
-loadProfileCards();
+  // Legg til hendelseslytter for å laste inn 10 nye kort
+  loadNewCardsButton.addEventListener("click", function () {
+    loadProfileCards();
+  });
 
-// Legg til hendelseslytter for å laste inn 10 nye kort
-loadNewCardsButton.addEventListener("click", function () {
-  loadProfileCards();
-});
-
-// Legg til hendelseslytter for filtrering
-filterSelect.addEventListener("change", function () {
-  const selectedBreed = filterSelect.value.toLowerCase();
-  loadProfileCards(selectedBreed);
+  // Legg til hendelseslytter for filtrering
+  filterSelect.addEventListener("change", function () {
+    const selectedBreed = filterSelect.value.toLowerCase();
+    loadProfileCards(selectedBreed);
+  });
 });
