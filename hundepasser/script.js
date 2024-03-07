@@ -110,12 +110,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Opprett en hilsen fra eieren av hunden
     const ownerGreeting = document.createElement("p");
-    ownerGreeting.textContent =
-      "Hello! I'm the owner of this lovely dog. Feel free to send me a message!";
+    ownerGreeting.textContent = "";
     ownerGreeting.classList.add("owner-greeting");
     chatBox.appendChild(ownerGreeting);
+
+    //Lukke chattfeltet: DEL 5
+    const closeButton = document.createElement("button");
+    closeButton.textContent = "X";
+    closeButton.classList.add("close-btn");
+    closeButton.addEventListener("click", closeChatBox);
+    chatBox.appendChild(closeButton);
+  }
+
+  function closeChatBox() {
+    const chatBox = document.querySelector(".chat-box");
+    chatBox.style.display = "none";
   }
 });
+
 async function loadProfileCards(filterBreed) {
   profilesContainer.innerHTML = ""; // Tøm eksisterende kort
 
