@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
     chatButton.textContent = "Chat";
     chatButton.classList.add("chat-btn");
     chatButton.addEventListener("click", function () {
-      console.log("Chat button clicked");
+      openChatBox();
     });
     profileCard.appendChild(chatButton);
 
@@ -102,6 +102,12 @@ document.addEventListener("DOMContentLoaded", function () {
       createProfileCard();
     }
   });
+
+  function openChatBox() {
+    const chatBox = document.querySelector(".chat-box");
+    chatBox.style.display = "block";
+  }
+
 });
 async function loadProfileCards(filterBreed) {
   profilesContainer.innerHTML = ""; // Tøm eksisterende kort
