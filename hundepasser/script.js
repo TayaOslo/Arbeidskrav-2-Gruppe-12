@@ -126,19 +126,19 @@ document.addEventListener("DOMContentLoaded", function () {
     const chatBox = document.querySelector(".chat-box");
     chatBox.style.display = "none";
   }
-});
 
-async function loadProfileCards(filterBreed) {
-  profilesContainer.innerHTML = ""; // Tøm eksisterende kort
+  async function loadProfileCards(filterBreed) {
+    profilesContainer.innerHTML = ""; // Tøm eksisterende kort
 
-  // Last inn 10 nye kort basert på filteret
-  for (let i = 0; i < 10; i++) {
-    const user = await fetchRandomUser();
-    const dogImage = await fetchRandomDogImage();
+    // Last inn 10 nye kort basert på filteret
+    for (let i = 0; i < 10; i++) {
+      const user = await fetchRandomUser();
+      const dogImage = await fetchRandomDogImage();
 
-    // Opprett kortet hvis det ikke er et filter eller hunderase matcher
-    if (!filterBreed || user.name.first.toLowerCase().includes(filterBreed)) {
-      createProfileCard(user, dogImage);
+      // Opprett kortet hvis det ikke er et filter eller hunderase matcher
+      if (!filterBreed || user.name.first.toLowerCase().includes(filterBreed)) {
+        createProfileCard(user, dogImage);
+      }
     }
   }
-}
+});
