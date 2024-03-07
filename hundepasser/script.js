@@ -93,6 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
 async function loadProfileCards(filterBreed) {
   profilesContainer.innerHTML = ""; // Tøm eksisterende kort
 
@@ -110,3 +111,14 @@ async function loadProfileCards(filterBreed) {
 
 // Opprett initielle 10 kort
 loadProfileCards();
+
+// Legg til hendelseslytter for å laste inn 10 nye kort
+loadNewCardsButton.addEventListener("click", function () {
+  loadProfileCards();
+});
+
+// Legg til hendelseslytter for filtrering
+filterSelect.addEventListener("change", function () {
+  const selectedBreed = filterSelect.value.toLowerCase();
+  loadProfileCards(selectedBreed);
+});
