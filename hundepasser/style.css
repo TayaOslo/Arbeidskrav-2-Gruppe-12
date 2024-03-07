@@ -92,3 +92,42 @@ h1 {
 .chat-btn:hover {
   background-color: #d0ad67;
 }
+
+.chat-box {
+  display: none; /* Hide the chat box by default */
+  position: fixed; /* Fixed position so it stays in place */
+  bottom: 20px; /* Distance from the bottom of the viewport */
+  right: 20px; /* Distance from the right of the viewport */
+  width: 500px; /* Set the width of the chat box */
+  height: 150px;
+  background-color:#e8d4c6; /* Background color of the chat box */
+  border: 1px solid #ccc; /* Border around the chat box */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle effect */
+  z-index: 999; /* Ensure the chat box stays on top of other elements */
+}
+
+.chat-input {
+  width: calc(100% - 20px); /* Adjust the width of the input field */
+  height:calc(100% - 70px) ;
+  margin: 10px; /* Add margin around the input field */
+  padding: 1px; /* Add padding inside the input field */
+  border: 1px solid #fbf2ed; /* Border around the input field */
+  border-radius: 5px; /* Rounded corners */
+  resize: none; /* Prevent resizing of the input field */
+}
+
+.send-btn {
+  width: calc(100% - 20px); /* Adjust the width of the button */
+  margin: 0 10px 10px; /* Add margin below the button */
+  padding: 10px; /* Add padding inside the button */
+  background-color: #733b36; /* Button background color */
+  color: #fff; /* Button text color */
+  border: none; /* Remove button border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+.send-btn:hover {
+  background-color: #0056b3; /* Darker background color on hover */
+}

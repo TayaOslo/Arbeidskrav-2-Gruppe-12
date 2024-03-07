@@ -103,11 +103,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  //Chatteboksen: DEL 5
   function openChatBox() {
     const chatBox = document.querySelector(".chat-box");
     chatBox.style.display = "block";
   }
-
 });
 async function loadProfileCards(filterBreed) {
   profilesContainer.innerHTML = ""; // Tøm eksisterende kort
