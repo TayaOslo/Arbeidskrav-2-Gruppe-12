@@ -51,6 +51,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     profileCard.appendChild(deleteButton);
 
+    //Chattte-knapp: DEL 5
+
+    const chatButton = document.createElement("button");
+    chatButton.textContent = "Chat";
+    chatButton.classList.add("chat-btn");
+    chatButton.addEventListener("click", function () {
+      openChatBox();
+    });
+    profileCard.appendChild(chatButton);
+
     fetchRandomUser().then((user) => {
       const userImg = document.createElement("img");
       userImg.classList.add("profile-img");
@@ -92,6 +102,12 @@ document.addEventListener("DOMContentLoaded", function () {
       createProfileCard();
     }
   });
+
+  //Chatteboksen: DEL 5
+  function openChatBox() {
+    const chatBox = document.querySelector(".chat-box");
+    chatBox.style.display = "block";
+  }
 });
 async function loadProfileCards(filterBreed) {
   profilesContainer.innerHTML = ""; // Tøm eksisterende kort
