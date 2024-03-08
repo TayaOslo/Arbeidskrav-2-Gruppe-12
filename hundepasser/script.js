@@ -5,12 +5,15 @@ document.addEventListener("DOMContentLoaded", function () {
   loadNewCardsButton.classList.add("load-new-btn");
   document.body.appendChild(loadNewCardsButton);
 
+  //ulike hunderaser
   const filterSelect = document.createElement("select");
   filterSelect.classList.add("filter-select");
+  selectedBreed = undefined;
   const dogBreeds = [
+    "Choose breed",
     "Labrador",
     "German Shepherd",
-    "Golden Retriever",
+    "Retriever",
     "Poodle",
     "Bulldog",
   ];
@@ -31,13 +34,18 @@ document.addEventListener("DOMContentLoaded", function () {
     return data.results[0];
   }
 
-  async function fetchRandomDogImage() {
-    const response = await fetch("https://dog.ceo/api/breeds/image/random");
+  async function fetchRandomDogImage(breed) {
+    let url = "https://dog.ceo/api/breeds/image/random";
+    //hvis breed blir sendt inn
+    if (breed != undefined)
+      url = `https://dog.ceo/api/breed/${breed}/images/random`;
+
+    const response = await fetch(url);
     const data = await response.json();
     return data.message;
   }
 
-  function createProfileCard() {
+  function createProfileCard(breed = undefined) {
     const profileCard = document.createElement("div");
     profileCard.classList.add("profile-card");
 
@@ -46,11 +54,9 @@ document.addEventListener("DOMContentLoaded", function () {
     deleteButton.classList.add("delete-btn");
     deleteButton.addEventListener("click", function () {
       profileCard.remove();
-      createProfileCard();
     });
 
     profileCard.appendChild(deleteButton);
-
     //Chattte-knapp: DEL 5
 
     const chatButton = document.createElement("button");
@@ -67,8 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
       userImg.src = user.picture.large;
       userImg.alt = "User Image";
       profileCard.appendChild(userImg);
-
-      fetchRandomDogImage().then((dogImage) => {
+      fetchRandomDogImage(breed).then((dogImage) => {
         const dogImg = document.createElement("img");
         dogImg.classList.add("profile-img");
         dogImg.src = dogImage;
@@ -94,15 +99,6 @@ document.addEventListener("DOMContentLoaded", function () {
   for (let i = 0; i < 10; i++) {
     createProfileCard();
   }
-
-  // Function to load 10 new profile cards
-  loadNewCardsButton.addEventListener("click", function () {
-    profilesContainer.innerHTML = ""; // Clear existing cards
-    for (let i = 0; i < 10; i++) {
-      createProfileCard();
-    }
-  });
-
   // Event delegation for send button
   document.addEventListener("click", function (event) {
     if (event.target.classList.contains("send-btn")) {
@@ -189,9 +185,27 @@ document.addEventListener("DOMContentLoaded", function () {
       const dogImage = await fetchRandomDogImage();
 
       // Opprett kortet hvis det ikke er et filter eller hunderase matcher
-      if (!filterBreed || user.name.first.toLowerCase().includes(filterBreed)) {
+      if (!filterBreed || dogImage.includes(filterBreed)) {
         createProfileCard(user, dogImage);
       }
     }
   }
+
+  // Legg til hendelseslytter for å laste inn 10 nye kort
+  loadNewCardsButton.addEventListener("click", function () {
+    for (let i = 0; i < 10; i++) {
+      createProfileCard();
+    }
+  });
+
+  // Legg til hendelseslytter for filtrering
+  filterSelect.addEventListener("change", function () {
+    if (filterSelect.value != "Choose breed") {
+      selectedBreed = filterSelect.value.toLowerCase().replace(" ", "");
+    }
+    profilesContainer.innerHTML = ""; // Tøm eksisterende kort
+    for (let i = 0; i < 10; i++) {
+      createProfileCard(selectedBreed);
+    }
+  });
 });
