@@ -176,7 +176,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  async function loadProfileCards(filterBreed) {
+  /* async function loadProfileCards(filterBreed) {
     profilesContainer.innerHTML = ""; // Tøm eksisterende kort
 
     // Last inn 10 nye kort basert på filteret
@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function () {
         createProfileCard(user, dogImage);
       }
     }
-  }
+  }*/
 
   // Legg til hendelseslytter for å laste inn 10 nye kort
   loadNewCardsButton.addEventListener("click", function () {
