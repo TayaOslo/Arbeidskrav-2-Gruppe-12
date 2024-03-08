@@ -71,9 +71,9 @@ document.addEventListener("DOMContentLoaded", function () {
         "Voff voff voff",
         "WRAFF!!!",
       ];
-      const randomGreeting = [Math.floor(Math.random() * dogGreetings.length)];
+      const randomIndex = Math.floor(Math.random() * dogGreetings.length);
+      const randomGreeting = dogGreetings[randomIndex];
       alert(randomGreeting);
-      dogGreetings;
     });
 
     fetchRandomUser().then((user) => {
