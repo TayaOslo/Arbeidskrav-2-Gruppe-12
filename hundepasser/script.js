@@ -7,10 +7,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const filterSelect = document.createElement("select");
   filterSelect.classList.add("filter-select");
+  selectedBreed = undefined;
   const dogBreeds = [
+    "Choose breed",
     "Labrador",
     "German Shepherd",
-    "Golden Retriever",
+    "Retriever",
     "Poodle",
     "Bulldog",
   ];
@@ -31,13 +33,18 @@ document.addEventListener("DOMContentLoaded", function () {
     return data.results[0];
   }
 
-  async function fetchRandomDogImage() {
-    const response = await fetch("https://dog.ceo/api/breeds/image/random");
+  async function fetchRandomDogImage(breed) {
+    let url = "https://dog.ceo/api/breeds/image/random";
+    //hvis breed blir sendt inn
+    if (breed != undefined)
+      url = `https://dog.ceo/api/breed/${breed}/images/random`;
+
+    const response = await fetch(url);
     const data = await response.json();
     return data.message;
   }
 
-  function createProfileCard() {
+  function createProfileCard(breed = undefined) {
     const profileCard = document.createElement("div");
     profileCard.classList.add("profile-card");
 
@@ -56,8 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
       userImg.src = user.picture.large;
       userImg.alt = "User Image";
       profileCard.appendChild(userImg);
-
-      fetchRandomDogImage().then((dogImage) => {
+      fetchRandomDogImage(breed).then((dogImage) => {
         const dogImg = document.createElement("img");
         dogImg.classList.add("profile-img");
         dogImg.src = dogImage;
@@ -101,12 +107,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Legg til hendelseslytter for å laste inn 10 nye kort
   loadNewCardsButton.addEventListener("click", function () {
-    loadProfileCards();
+    for (let i = 0; i < 10; i++) {
+      createProfileCard();
+    }
   });
 
   // Legg til hendelseslytter for filtrering
   filterSelect.addEventListener("change", function () {
-    const selectedBreed = filterSelect.value.toLowerCase();
-    loadProfileCards(selectedBreed);
+    if (filterSelect.value != "Choose breed") {
+      selectedBreed = filterSelect.value.toLowerCase().replace(" ", "");
+    }
+    profilesContainer.innerHTML = ""; // Tøm eksisterende kort
+    for (let i = 0; i < 10; i++) {
+      createProfileCard(selectedBreed);
+    }
   });
 });
