@@ -155,3 +155,35 @@ h1 {
 .close-btn:hover {
   color: #000;
 }
+
+.message-box {
+  position: fixed;
+  width: 500px;
+  height: 140px;
+  bottom: 20px; /* Adjust this value as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px;
+  background-color: #e8d4c6;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  color: #733b36;
+  overflow-y: auto; /* Enable horizontal scrolling if the content overflows */
+  max-height: 150px; /* Set a maximum height for the message box */
+}
+
+.message-box h2 {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 5px;
+  color: #733b36;
+}
+
+.delete-message-text {
+  color: red; /* Example: Change the color to red */
+  text-decoration: underline; /* Example: Underline the text */
+  cursor: pointer; /* Example: Change cursor to pointer */
+  /* Add more styles as needed */
+}

@@ -103,29 +103,110 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  //Chatteboksen: DEL 5
+  // Event delegation for send button
+  document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("send-btn")) {
+      sendMessage();
+      closeChatBox(); // Hide chat box after sending message
+    }
+  });
+
+  // Chat box
   function openChatBox() {
     const chatBox = document.querySelector(".chat-box");
     chatBox.style.display = "block";
 
-    // Opprett en hilsen fra eieren av hunden
-    const ownerGreeting = document.createElement("p");
-    ownerGreeting.textContent = "";
-    ownerGreeting.classList.add("owner-greeting");
-    chatBox.appendChild(ownerGreeting);
-
-    //Lukke chattfeltet: DEL 5
+    // Close chat box
     const closeButton = document.createElement("button");
     closeButton.textContent = "X";
     closeButton.classList.add("close-btn");
     closeButton.addEventListener("click", closeChatBox);
     chatBox.appendChild(closeButton);
+
+    // Send button
+    const sendButton = document.createElement("button");
+    sendButton.textContent = "Send";
+    sendButton.classList.add("send-btn");
+    chatBox.appendChild(sendButton);
+
+    // Text area for typing message
+    const messageInput = document.createElement("textarea");
+    messageInput.classList.add("chat-input");
+    messageInput.placeholder = "Type your message here...";
+    chatBox.appendChild(messageInput);
+
+    // Event listener for send button
+    sendButton.addEventListener("click", sendMessage);
   }
 
   function closeChatBox() {
     const chatBox = document.querySelector(".chat-box");
     chatBox.style.display = "none";
   }
+
+  // Function to send message
+  function sendMessage() {
+    const messageInput = document.querySelector(".chat-input");
+    const message = messageInput.value.trim();
+
+    if (message !== "") {
+      const messageBox = document.createElement("div");
+      messageBox.classList.add("message-box");
+
+      // Create title
+    const title = document.createElement("h2");
+    title.innerHTML =
+      "Your message has been sent. If you want to delete, please press <span class='delete-message-text'> DELETE</span>";
+    messageBox.appendChild(title);
+
+    // Event listener for clicking the word "delete"
+    const deleteText = messageBox.querySelector(".delete-message-text");
+    deleteText.addEventListener("click", function () {
+      messageBox.remove(); // Remove the message box when delete text is clicked
+    });
+
+    // Create message content
+    const messageContent = document.createElement("div");
+    messageContent.textContent = message;
+    messageBox.appendChild(messageContent);
+
+    document.body.appendChild(messageBox);
+
+    // Clear the message input field
+    messageInput.value = "";
+  }
+}
+
+      /*
+      // Create title
+      const title = document.createElement("h2");
+      title.textContent =
+        "Your message has been sent. If you want to delete, please press DELETE";
+      messageBox.appendChild(title);
+
+      // Create message content
+      const messageContent = document.createElement("div");
+      messageContent.textContent = message;
+      messageBox.appendChild(messageContent);
+
+    
+      // Create delete button
+      const deleteButton = document.createElement("button");
+      deleteButton.textContent = "X";
+      deleteButton.classList.add("delete-message-btn");
+      deleteButton.addEventListener("click", function () {
+        messageBox.remove(); // Remove the message box when delete button is clicked
+      });
+      messageBox.appendChild(deleteButton);
+      
+
+      document.body.appendChild(messageBox);
+
+      // Clear the message input field
+      messageInput.value = "";
+    }
+  }
+*/
 
   async function loadProfileCards(filterBreed) {
     profilesContainer.innerHTML = ""; // Tøm eksisterende kort
