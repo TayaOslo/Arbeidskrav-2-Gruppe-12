@@ -154,51 +154,21 @@ document.addEventListener("DOMContentLoaded", function () {
       messageBox.classList.add("message-box");
 
       // Create title
-    const title = document.createElement("h2");
-    title.innerHTML =
-      "Your message has been sent. If you want to delete, please press <span class='delete-message-text'> DELETE</span>";
-    messageBox.appendChild(title);
-
-    // Event listener for clicking the word "delete"
-    const deleteText = messageBox.querySelector(".delete-message-text");
-    deleteText.addEventListener("click", function () {
-      messageBox.remove(); // Remove the message box when delete text is clicked
-    });
-
-    // Create message content
-    const messageContent = document.createElement("div");
-    messageContent.textContent = message;
-    messageBox.appendChild(messageContent);
-
-    document.body.appendChild(messageBox);
-
-    // Clear the message input field
-    messageInput.value = "";
-  }
-}
-
-      /*
-      // Create title
       const title = document.createElement("h2");
-      title.textContent =
-        "Your message has been sent. If you want to delete, please press DELETE";
+      title.innerHTML =
+        "Your message has been sent. If you want to delete, please press <span class='delete-message-text'> DELETE</span>";
       messageBox.appendChild(title);
+
+      // Event listener for clicking the word "delete"
+      const deleteText = messageBox.querySelector(".delete-message-text");
+      deleteText.addEventListener("click", function () {
+        messageBox.remove(); // Remove the message box when delete text is clicked
+      });
 
       // Create message content
       const messageContent = document.createElement("div");
       messageContent.textContent = message;
       messageBox.appendChild(messageContent);
-
-    
-      // Create delete button
-      const deleteButton = document.createElement("button");
-      deleteButton.textContent = "X";
-      deleteButton.classList.add("delete-message-btn");
-      deleteButton.addEventListener("click", function () {
-        messageBox.remove(); // Remove the message box when delete button is clicked
-      });
-      messageBox.appendChild(deleteButton);
-      
 
       document.body.appendChild(messageBox);
 
@@ -206,7 +176,6 @@ document.addEventListener("DOMContentLoaded", function () {
       messageInput.value = "";
     }
   }
-*/
 
   async function loadProfileCards(filterBreed) {
     profilesContainer.innerHTML = ""; // Tøm eksisterende kort
