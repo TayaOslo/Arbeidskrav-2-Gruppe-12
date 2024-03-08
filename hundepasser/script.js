@@ -61,6 +61,21 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     profileCard.appendChild(chatButton);
 
+    //Legge til hilsen for når kortet klikkes på
+    profileCard.addEventListener("click", function () {
+      const dogGreetings = [
+        "Voff voff",
+        "Grrr!",
+        "Mjau??",
+        "Voff!",
+        "Voff voff voff",
+        "WRAFF!!!",
+      ];
+      const randomGreeting = [Math.floor(Math.random() * dogGreetings.length)];
+      alert(randomGreeting);
+      dogGreetings;
+    });
+
     fetchRandomUser().then((user) => {
       const userImg = document.createElement("img");
       userImg.classList.add("profile-img");
