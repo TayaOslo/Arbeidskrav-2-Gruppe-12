@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
   loadNewCardsButton.classList.add("load-new-btn");
   document.body.appendChild(loadNewCardsButton);
 
+  //ulike hunderaser
   const filterSelect = document.createElement("select");
   filterSelect.classList.add("filter-select");
   selectedBreed = undefined;
