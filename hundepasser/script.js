@@ -113,6 +113,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Chat box
   function openChatBox() {
+    const existingMessageBoxes = document.querySelectorAll(".message-box");
+    existingMessageBoxes.forEach((messageBox) => messageBox.remove());
+
     const chatBox = document.querySelector(".chat-box");
     chatBox.style.display = "block";
 
