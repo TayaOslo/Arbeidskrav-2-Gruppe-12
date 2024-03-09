@@ -191,21 +191,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  async function loadProfileCards(filterBreed) {
-    profilesContainer.innerHTML = ""; // Tøm eksisterende kort
-
-    // Last inn 10 nye kort basert på filteret
-    for (let i = 0; i < 10; i++) {
-      const user = await fetchRandomUser();
-      const dogImage = await fetchRandomDogImage();
-
-      // Opprett kortet hvis det ikke er et filter eller hunderase matcher
-      if (!filterBreed || dogImage.includes(filterBreed)) {
-        createProfileCard(user, dogImage);
-      }
-    }
-  }
-
   // Legg til hendelseslytter for å laste inn 10 nye kort
   loadNewCardsButton.addEventListener("click", function () {
     for (let i = 0; i < 10; i++) {
