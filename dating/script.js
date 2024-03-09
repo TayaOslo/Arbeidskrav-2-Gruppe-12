@@ -87,7 +87,7 @@ function handleSwipe() {
   } else {
     let answer;
     do {
-      alert("Du har brukt opp alle sveipene dine!");
+      alert("You have used all of your swipes!");
       answer = prompt("Do you want to swipe more? Yes/No");
     } while (answer.toLowerCase() !== "yes" && answer.toLowerCase() !== "no");
 
@@ -225,7 +225,7 @@ document.addEventListener("keydown", (e) => {
 
 function renderProfile() {
   if (likedUsers.length > 10) {
-    alert("Slett minst en profil! fra listen");
+    alert("Delete at least one profile from the list!");
   } else {
     const matchesProfile = likedUsers
       .map((user, index) => {
@@ -283,4 +283,3 @@ function editProfile(index) {
 function updateLocalStorage() {
   localStorage.setItem("likedProfiles", JSON.stringify(likedUsers));
 }
-
